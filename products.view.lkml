@@ -50,6 +50,6 @@ view: products {
   measure: total_retail_price {
     type: sum
     sql: ${TABLE}.retail_price ;;
-    value_format: "usd"
+    value_format_name: usd
   }
 }

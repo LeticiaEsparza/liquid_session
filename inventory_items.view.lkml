@@ -54,6 +54,6 @@ view: inventory_items {
   measure: total_cost {
     type: sum
     sql: ${TABLE}.cost ;;
-    value_format: "usd"
+    value_format_name: usd
   }
 }
