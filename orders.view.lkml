@@ -31,6 +31,25 @@ view: orders {
     sql: ${TABLE}.traffic_source ;;
   }
 
+  filter: source_filter {
+    type: string
+    suggest_dimension: traffic_source
+  }
+
+  dimension: source_satisfies_filter {
+    type: yesno
+    hidden: yes
+    sql:{% condition source_filter %} ${traffic_source} {% endcondition %} ;;
+}
+
+  measure: count_dynamic_source {
+    type: count
+    filters: {
+      field: source_satisfies_filter
+      value: "yes"
+    }
+  }
+
   dimension: user_id {
     type: number
     # hidden: yes
