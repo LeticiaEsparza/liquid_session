@@ -48,4 +48,39 @@ view: order_items {
     sql: ${TABLE}.sale_price ;;
     value_format_name: usd
   }
+
+  parameter: metric_selector {
+    type: string
+    allowed_value: {
+      label: "Total Sale Price"
+      value: "total_sale_price"
+    }
+    allowed_value: {
+      label: "Total Retail Price"
+      value: "total_retail_price"
+    }
+    allowed_value: {
+      label: "Total Cost"
+      value: "total_cost"
+    }
+  }
+
+  measure: metric {
+    label_from_parameter: metric_selector
+    #label changes in a visualization (table example)
+    type: number
+    value_format_name: usd
+    sql:
+      CASE
+        WHEN {% parameter metric_selector %} = 'total_sale_price' THEN
+          ${order_items.total_sale_price}
+        WHEN {% parameter metric_selector %} = 'total_retail_price' THEN
+          ${products.total_retail_price}
+        WHEN {% parameter metric_selector %} = 'total_cost' THEN
+          ${inventory_items.total_cost}
+        ELSE
+          NULL
+      END ;;
+  }
+
 }
