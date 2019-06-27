@@ -62,6 +62,16 @@ view: orders {
 
   measure: count {
     type: count
-    drill_fields: [id, users.id, users.first_name, users.last_name, order_items.count]
+#     drill_fields: [id, users.id, users.first_name, users.last_name, order_items.count]
+    html: {% if products.category._in_query and value >= 20000 %}
+              <font color="green">{{rendered_value}}</font>
+          {% elsif products.category._in_query and value >= 10000 and value < 20000 %}
+              <font color="goldenrod">{{rendered_value}}</font>
+          {% elsif products.category._in_query %}
+              <font color="red">{{rendered_value}}</font>
+          {% else %}
+              {{rendered_value}}
+          {% endif %}
+    ;;
   }
 }
