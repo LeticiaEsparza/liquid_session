@@ -46,4 +46,9 @@ view: products {
     type: count
     drill_fields: [id, item_name, inventory_items.count, product_facts.count]
   }
+
+  measure: total_retail_price {
+    type: sum
+    sql: ${TABLE}.retail_price ;;
+  }
 }
