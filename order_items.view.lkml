@@ -49,6 +49,8 @@ view: order_items {
     value_format_name: usd
   }
 
+  #EXAMPLE 2 LIQUID SESSION 2
+
   parameter: metric_selector {
     type: string
     allowed_value: {
@@ -82,5 +84,7 @@ view: order_items {
           NULL
       END ;;
   }
+
+  #EXAMPLE 2 LIQUID SESSION 2
 
 }
