@@ -56,8 +56,15 @@ view: orders {
     sql: ${TABLE}.user_id ;;
   }
 
-  measure: count {
+measure: count {
     type: count
     drill_fields: [id, users.id, users.first_name, users.last_name, order_items.count]
+    html: {% if value >= 20000 %}
+            <font color="green">{{rendered_value}}</font>
+          {% elsif value < 10000 %}
+            <font color="red">{{rendered_value}}</font>
+          {% else %}
+            <font color="gold">{{rendered_value}}</font>
+          {% endif %} ;;
   }
 }
