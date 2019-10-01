@@ -43,9 +43,41 @@ view: order_items {
     drill_fields: [id, orders.id, inventory_items.id]
   }
 
+  parameter: metric_selector {
+    type: string
+    allowed_value: {
+      label: "Total Sale Price"
+      value: "total_sale_price"
+    }
+    allowed_value: {
+      label: "Total Cost"
+      value: "total_cost"
+    }
+    allowed_value: {
+      label: "Total Retail Price"
+      value: "total_retail_price"
+    }
+  }
+
   measure: total_sale_price {
     type: sum
     sql: ${TABLE}.sale_price ;;
     value_format_name: usd
+  }
+
+  measure: metric {
+    label_from_parameter: metric_selector
+    type: number
+    value_format: "$0.0,\"K\""
+    sql:
+    CASE
+      WHEN {% parameter metric_selector %} = 'total_sale_price'
+        THEN ${TABLE}.total_sale_price
+      WHEN {% parameter metric_selector %} = 'total_cost'
+        THEN ${inventory_items.total_cost}
+      WHEN {% parameter metric_selector %} = 'total_retail_price'
+        THEN ${products.total_retail_price}
+      ELSE NULL
+    END ;;
   }
 }
